@@ -17,11 +17,11 @@ rc('text', usetex=True)
 
 FORMAT = '.pdf'
 
-ALGORITHM_CONFIGS = ['vio_mono', 'vio_stereo']
+ALGORITHM_CONFIGS = ['model_sim', 'vins_sim']
 
 # These are the labels that will be displayed for items in ALGORITHM_CONFIGS
-PLOT_LABELS = {'vio_mono': 'vio mono',
-               'vio_stereo': 'vio stereo'}
+PLOT_LABELS = {'model_sim': 'model vio',
+               'vins_sim': 'vins'}
 
 # assgin colors to different configurations
 # make use you have more colors in the pallete!
@@ -34,21 +34,19 @@ for i in range(len(ALGORITHM_CONFIGS)):
 
 # DATASETS = ['MH_01', 'MH_02', 'MH_03', 'MH_04', 'MH_05', 'V1_01',
             # 'V1_02', 'V1_03', 'V2_01', 'V2_02', 'V2_03']
-DATASETS = ['MH_01', 'MH_03', 'MH_05', 'V2_01', 'V2_02', 'V2_03']
+DATASETS = ['helical_eight_fY_nF_1ms', 'helical_eight_fY_nF_2ms', 'helical_eight_fY_nF_2p5ms', 'helical_eight_fY_nF_4ms', 'helical_eight_fY_nF_5ms', 'helical_eight_fY_2F_1ms', 'helical_eight_fY_2F_2ms', 'helical_eight_fY_2F_2p5ms']
 
 # The maximum lenght will be used to calculate the relative error.
 # otherwise it is calculated from the groundtruth
-MAX_TRAJ_LENGTHS = {'MH_01': 80.6,
-                    'MH_02': 73.4,
-                    'MH_03': 130.9,
-                    'MH_04': 91.7,
-                    'MH_05': 97.5,
-                    'V1_01': 58.5,
-                    'V1_02': 75.8,
-                    'V1_03': 78.9,
-                    'V2_01': 36.4,
-                    'V2_02': 83.2,
-                    'V2_03': 86.1}
+MAX_TRAJ_LENGTHS = {'helical_eight_fY_nF_1ms': 65,
+                    'helical_eight_fY_nF_2ms': 65,
+                    'helical_eight_fY_nF_2p5ms': 65,
+                    'helical_eight_fY_nF_4ms': 65,
+                    'helical_eight_fY_nF_5ms': 65,
+                    'helical_eight_fY_2F_1ms': 65,
+                    'helical_eight_fY_2F_2ms': 65,
+                    'helical_eight_fY_2F_2p5ms': 65}
+
 # boxplot distances that will be used for all datasets for overall errors
 OVERALL_BOXPLOT_DISTANCES = [7.0, 14.0, 21.0, 28.0, 35.0]
 
