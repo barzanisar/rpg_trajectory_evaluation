@@ -46,7 +46,7 @@ for i in range(len(ALGORITHM_CONFIGS)):
 #DATASETS = ['helical_eight_fY_nF_1ms', 'helical_eight_fY_nF_2ms', 'helical_eight_fY_nF_2p5ms', 'helical_eight_fY_nF_4ms', 'helical_eight_fY_nF_5ms', 'helical_eight_fY_2F_1ms', 'helical_eight_fY_2F_2ms', 'helical_eight_fY_2F_2p5ms']
 #DATASETS = ['random_fY_nF_1ms', 'random_fY_nF_2ms', 'random_fY_nF_2p5ms', 'random_fY_nF_4ms', 'random_fY_nF_5ms', 'random_fY_2F_1ms', 'random_fY_2F_2ms', 'random_fY_2F_2p5ms']
 #DATASETS = ['helical_eight_fY_2F_2p5ms', 'random_fY_2F_2p5ms']
-DATASETS = ['test']
+DATASETS = ['test_clean_branch']
 # The maximum lenght will be used to calculate the relative error.
 # otherwise it is calculated from the groundtruth
 # MAX_TRAJ_LENGTHS = {'helical_eight_fY_nF_1ms': 65,
