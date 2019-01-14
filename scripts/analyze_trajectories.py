@@ -60,7 +60,7 @@ DATASETS = ['test_clean_branch']
 
 #MAX_TRAJ_LENGTHS = {'helical_eight_fY_2F_2p5ms': 65,
 #                    'random_fY_2F_2p5ms': 72} 
-MAX_TRAJ_LENGTHS = {'test': 64}                  
+MAX_TRAJ_LENGTHS = {'test_clean_branch': 64}                  
 
 # MAX_TRAJ_LENGTHS = {'random_fY_nF_1ms': 72,
 #                     'random_fY_nF_2ms': 72,
