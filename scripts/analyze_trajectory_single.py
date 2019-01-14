@@ -131,6 +131,8 @@ if __name__ == '__main__':
         111, xlabel='Distance traveled [m]',
         ylabel='Translation error [m]')
     pu.boxplot_compare(ax, distances, rel_trans_err, labels, colors)
+    # ax.autoscale(enable=True, axis='y', tight=True)
+    # ax.set_ylim([0.0, 0.4])
     fig.tight_layout()
     fig.savefig(plots_dir+'/rel_translation_error'+FORMAT, bbox_inches="tight")
     plt.close(fig)

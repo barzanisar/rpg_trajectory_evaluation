@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import rc
-rc('font', **{'family': 'serif', 'serif': ['Cardo']})
+rc('font', **{'family': 'serif', 'serif': ['Cardo'], 'size' : 14})
 rc('text', usetex=True)
 
 FORMAT = '.pdf'
@@ -47,9 +47,12 @@ def boxplot_compare(ax, xlabels,
     ax.set_xticklabels(xlabels)
     xlims = ax.get_xlim()
     ax.set_xlim([xlims[0]-0.1, xlims[1]-0.1])
-    if n_data != 1:
-        ax.legend(leg_handles, leg_labels, bbox_to_anchor=(
-            1.05, 1), loc=2, borderaxespad=0.)
+    #ax.autoscale(enable=True, axis='y', tight=True)
+    #if n_data != 1:
+    #    ax.legend(leg_handles, leg_labels, bbox_to_anchor=(
+    #        1.05, 1), loc=2, borderaxespad=0.)
+    #if n_data != 1: #for paper
+    #    ax.legend(leg_handles, leg_labels, loc='upper center', ncol=2,  borderaxespad=0.) #fontsize='small'
     map(lambda x: x.set_visible(False), leg_handles)
 
 

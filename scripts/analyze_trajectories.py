@@ -12,16 +12,25 @@ from trajectory import Trajectory
 import plot_utils as pu
 import results_writer as res_writer
 
-rc('font', **{'family': 'serif', 'serif': ['Cardo']})
+rc('font', **{'family': 'serif', 'serif': ['Cardo'], 'size' : 20})
 rc('text', usetex=True)
+rc('axes', labelsize=20)
+rc('xtick', labelsize=15)
+rc('ytick', labelsize=15)
 
 FORMAT = '.pdf'
 
-ALGORITHM_CONFIGS = ['model_sim', 'vins_sim']
+ALGORITHM_CONFIGS = ['vimo', 'vins']
 
 # These are the labels that will be displayed for items in ALGORITHM_CONFIGS
-PLOT_LABELS = {'model_sim': 'model vio',
-               'vins_sim': 'vins'}
+
+# PLOT_LABELS = {'extFNnBmodel_sim': 'VIMO',
+#                 'extFNnBcmodel_sim': 'VIMO B',
+#                'vins_sim': 'VINS'}
+PLOT_LABELS = {'vimo': 'VIMO',
+               'vins': 'VINS'}
+
+
 
 # assgin colors to different configurations
 # make use you have more colors in the pallete!
@@ -34,18 +43,33 @@ for i in range(len(ALGORITHM_CONFIGS)):
 
 # DATASETS = ['MH_01', 'MH_02', 'MH_03', 'MH_04', 'MH_05', 'V1_01',
             # 'V1_02', 'V1_03', 'V2_01', 'V2_02', 'V2_03']
-DATASETS = ['helical_eight_fY_nF_1ms', 'helical_eight_fY_nF_2ms', 'helical_eight_fY_nF_2p5ms', 'helical_eight_fY_nF_4ms', 'helical_eight_fY_nF_5ms', 'helical_eight_fY_2F_1ms', 'helical_eight_fY_2F_2ms', 'helical_eight_fY_2F_2p5ms']
-
+#DATASETS = ['helical_eight_fY_nF_1ms', 'helical_eight_fY_nF_2ms', 'helical_eight_fY_nF_2p5ms', 'helical_eight_fY_nF_4ms', 'helical_eight_fY_nF_5ms', 'helical_eight_fY_2F_1ms', 'helical_eight_fY_2F_2ms', 'helical_eight_fY_2F_2p5ms']
+#DATASETS = ['random_fY_nF_1ms', 'random_fY_nF_2ms', 'random_fY_nF_2p5ms', 'random_fY_nF_4ms', 'random_fY_nF_5ms', 'random_fY_2F_1ms', 'random_fY_2F_2ms', 'random_fY_2F_2p5ms']
+#DATASETS = ['helical_eight_fY_2F_2p5ms', 'random_fY_2F_2p5ms']
+DATASETS = ['test']
 # The maximum lenght will be used to calculate the relative error.
 # otherwise it is calculated from the groundtruth
-MAX_TRAJ_LENGTHS = {'helical_eight_fY_nF_1ms': 65,
-                    'helical_eight_fY_nF_2ms': 65,
-                    'helical_eight_fY_nF_2p5ms': 65,
-                    'helical_eight_fY_nF_4ms': 65,
-                    'helical_eight_fY_nF_5ms': 65,
-                    'helical_eight_fY_2F_1ms': 65,
-                    'helical_eight_fY_2F_2ms': 65,
-                    'helical_eight_fY_2F_2p5ms': 65}
+# MAX_TRAJ_LENGTHS = {'helical_eight_fY_nF_1ms': 65,
+#                      'helical_eight_fY_nF_2ms': 65,
+#                      'helical_eight_fY_nF_2p5ms': 65,
+#                      'helical_eight_fY_nF_4ms': 65,
+#                      'helical_eight_fY_nF_5ms': 65,
+#                      'helical_eight_fY_2F_1ms': 65,
+#                      'helical_eight_fY_2F_2ms': 65,
+#                      'helical_eight_fY_2F_2p5ms': 65}
+
+#MAX_TRAJ_LENGTHS = {'helical_eight_fY_2F_2p5ms': 65,
+#                    'random_fY_2F_2p5ms': 72} 
+MAX_TRAJ_LENGTHS = {'test': 64}                  
+
+# MAX_TRAJ_LENGTHS = {'random_fY_nF_1ms': 72,
+#                     'random_fY_nF_2ms': 72,
+#                     'random_fY_nF_2p5ms': 72,
+#                     'random_fY_nF_4ms': 72,
+#                     'random_fY_nF_5ms': 72,
+#                     'random_fY_2F_1ms': 72,
+#                     'random_fY_2F_2ms': 72,
+#                     'random_fY_2F_2p5ms': 72}
 
 # boxplot distances that will be used for all datasets for overall errors
 OVERALL_BOXPLOT_DISTANCES = [7.0, 14.0, 21.0, 28.0, 35.0]
@@ -114,19 +138,22 @@ def plot_odometry_error_per_dataset(dataset_rel_err, dataset_names, out_dir):
             config_labels.append(PLOT_LABELS[v])
             config_colors.append(COLORS[v])
 
-        fig = plt.figure(figsize=(6, 2.5))
+        fig = plt.figure(figsize=(6, 4.5)) #2.5
         ax = fig.add_subplot(
             111, xlabel='Distance traveled [m]',
             ylabel='Translation error [m]')
         pu.boxplot_compare(ax, distances, rel_err['trans_err'].values(),
                            config_labels, config_colors)
+        #ax.autoscale(enable=True, axis='y', tight=True)
+        ax.set_ylim([0.0, 1.0])
+        ax.set_ylim(auto=True)
         fig.tight_layout()
         fig.savefig(output_dir+'/'+dataset_nm +
                     '_translation_error'+FORMAT, bbox_inches="tight")
         plt.close(fig)
 
         # relative error
-        fig = plt.figure(figsize=(6, 2.5))
+        fig = plt.figure(figsize=(6, 4.5))
         ax = fig.add_subplot(
             111, xlabel='Distance traveled [m]',
             ylabel='Translation error [\%]')
@@ -139,7 +166,7 @@ def plot_odometry_error_per_dataset(dataset_rel_err, dataset_names, out_dir):
         plt.close(fig)
 
         # yaw orientation error
-        fig = plt.figure(figsize=(6, 2.5))
+        fig = plt.figure(figsize=(6, 4.5)) #2.5
         ax = fig.add_subplot(
             111, xlabel='Distance traveled [m]', ylabel='Yaw error [deg]')
         pu.boxplot_compare(ax, distances, rel_err['ang_yaw_err'].values(),
@@ -161,28 +188,36 @@ def plot_trajectories(dataset_trajectories_dict, dataset_names, output_dir):
         print("Plotting {0}...".format(dataset_nm))
 
         # plot trajectory
-        fig = plt.figure(figsize=(6, 5.5))
-        ax = fig.add_subplot(111, aspect='equal',
-                             xlabel='x [m]', ylabel='y [m]')
+        fig = plt.figure(figsize=(6, 4.5))
+        # ax = fig.add_subplot(111, aspect='equal',
+        #                      xlabel='x [m]', ylabel='y [m]')
+        ax = fig.add_subplot(111, xlabel='x [m]', ylabel='y [m]')
+        
         for alg in p_es_0:
             pu.plot_trajectory_top(ax, p_es_0[alg], COLORS[alg],
                                    PLOT_LABELS[alg])
         pu.plot_trajectory_top(ax, p_gt_0, 'm', 'Groundtruth')
-        plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        #plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        #plt.legend(loc='upper center', fontsize=12, ncol= 4, borderaxespad=0.) #fontsize='small' #for paper
+        #ax.set_ylim([-1.5, 2.5])
+        #ax.set_xlim([-1.5, 3.5])
+        #ax.set_aspect('equal')
         fig.tight_layout()
         fig.savefig(output_dir+'/' + dataset_nm +
                     '_trajectory_top'+FORMAT, bbox_inches="tight")
         plt.close(fig)
 
         # plot trajectory side
-        fig = plt.figure(figsize=(6, 2.2))
-        ax = fig.add_subplot(111, aspect='equal',
-                             xlabel='x [m]', ylabel='z [m]')
+        fig = plt.figure(figsize=(6, 4.5)) #2.2
+        # ax = fig.add_subplot(111, aspect='equal',
+        #                      xlabel='x [m]', ylabel='z [m]')
+        ax = fig.add_subplot(111, xlabel='x [m]', ylabel='z [m]')
         for alg in p_es_0:
             pu.plot_trajectory_side(ax, p_es_0[alg], COLORS[alg], 
                                     PLOT_LABELS[alg])
         pu.plot_trajectory_side(ax, p_gt_0, 'm', 'Groundtruth')
-        plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        #plt.legend(loc='upper center',  ncol= 3, borderaxespad=0.) #fontsize='small'
+        #plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         fig.tight_layout()
         fig.savefig(output_dir+'/'+dataset_nm +
                     '_trajectory_side'+FORMAT, bbox_inches="tight")
