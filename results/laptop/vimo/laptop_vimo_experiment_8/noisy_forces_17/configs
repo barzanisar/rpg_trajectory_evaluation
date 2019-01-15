@@ -1,0 +1,106 @@
+%YAML:1.0
+
+#common parameters
+imu_topic: "/snappy/snappy_imu"
+image_topic: "/snappy/snappy_cam/optic"
+control_topic: "/snappy/control_command"
+force_sensor_topic: "/load_cell/wrench"
+groundtruth_pose_topic: "/optitrack/snappy_groundtruth"
+
+output_path: "/home/barza/barza-vins-out/output/"
+rpg_eval_path: "/home/barza/catkin_ws/src/rpg_trajectory_evaluation/results/laptop"
+simulation_name: "test" #"/laptop_vins_sim_lowFreqControl"
+
+#camera calibration 
+model_type: PINHOLE
+camera_name: camera
+image_width: 640
+image_height: 480
+# projection_parameters:
+#    k2: -0.531706
+#    k3: 0.220641
+#    k4: 0.006742
+#    k5: -0.006576
+#    mu: 278.43
+#    mv: 278.15
+#    u0: 312.352018
+#    v0: 245.721332
+distortion_parameters:
+   k1: -0.25671807 #-0.531706   
+   k2: 0.04725751 #0.220641
+   p1: 0.00104411 #0.006742
+   p2: -0.00062039 #-0.006576
+projection_parameters:
+   fx: 286.82575808 #278.435626099241
+   fy: 286.84568334 #278.15084682451624
+   cx: 315.77845816 #303.3959097890055
+   cy: 239.75430535 #242.92796716953157
+
+# Extrinsic parameter between IMU and Camera.
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+                        # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
+                        # 2  Don't know anything about extrinsic parameters. You don't need to give R,T. We will try to calibrate it. Do some rotation movement at beginning.                        
+#If you choose 0 or 1, you should write down the following matrix.
+#Rotation from camera frame to imu frame, imu^R_cam
+extrinsicRotation: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ -0.0933, -0.7336, 0.6731, -0.9951, 0.0917, -0.0380, -0.0338, -0.6733, -0.7386]
+   #[-0.0023143539689352011, -0.780497785733154, 0.625154261147879, -0.999996837655596, 0.00242156707985874, -0.000678742724296355, -0.0009840958, -0.625153855045717, -0.7805009]
+   #[-0.09333932, -0.99505888, -0.03384655, -0.73364917, 0.09172074, -0.67330989, 0.67308742, -0.03801479, -0.73858527]
+ #[0.0000000, -0.6427876, 0.7660444, -1.0000000, 0.0000000, 0.0000000, 0.0000000, -0.7660444, -0.6427876]
+   
+#Translation from camera frame to imu frame, imu^T_cam
+extrinsicTranslation: !!opencv-matrix
+   rows: 3
+   cols: 1
+   dt: d
+   data: [-0.005, 0.015, 0.0] #[-0.0026, 0.024, -0.0098]
+
+#feature traker paprameters
+max_cnt: 150            # max feature number in feature tracking
+min_dist: 30            # min distance between two features 
+freq: 10                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
+F_threshold: 1.0        # ransac threshold (pixel)
+show_track: 1           # publish tracking image as topic
+equalize: 0             # if image is too dark or light, trun on equalize to find enough features
+fisheye: 1              # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
+
+#optimization parameters
+max_solver_time: 0.06  # max solver itration time (ms), to guarantee real time
+max_num_iterations: 10   # max solver itrations, to guarantee real time
+keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
+
+#imu parameters       The more accurate parameters you provide, the better performance
+acc_n: 0.6         # accelerometer measurement noise standard deviation. #0.2   0.04
+gyr_n: 0.1        # gyroscope measurement noise standard deviation.     #0.05  0.004
+acc_w: 0.02         # accelerometer bias random work noise standard deviation.  #0.02
+gyr_w: 4.0e-5       # gyroscope bias random work noise standard deviation.     #4.0e-5
+g_norm: 9.81007     # gravity magnitude
+
+#model parameters       The more accurate parameters you provide, the better performance
+control_thrust_z_n: 0.3 #1 (rmse 0.92) #0.08 vs 0.01            # control input acceleration noise standard deviation. # 0.001 better rmse 0.32
+control_thrust_x_y_n: 0.1 #0.6 (rmse 0.92) #0.08 better (rmse 0.09)vs 0.03 (rmse 0.1)
+fext_norm_weight: 5
+apply_model_preintegration:  1      # set to 1 to apply model preinteg
+euler_integration: 0                # for control inputs
+
+#loop closure parameters
+loop_closure: 0                    # start loop closure
+load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
+fast_relocalization: 0             # useful in real-time and large project
+pose_graph_save_path: "/home/tony-ws1/output/pose_graph/" # save and load path
+
+#unsynchronization parameters
+estimate_td: 0                      # online estimate time offset between camera and imu
+td: 0.0                             # initial value of time offset. unit: s. readed image clock + td = real image clock (IMU clock)
+
+#rolling shutter parameters
+rolling_shutter: 0                  # 0: global shutter camera, 1: rolling shutter camera
+rolling_shutter_tr: 0               # unit: s. rolling shutter read out time per frame (from data sheet). 
+
+#visualization parameters
+save_image: 1                   # save image in pose graph for visualization prupose; you can close this function by setting 0 
+visualize_imu_forward: 0        # output imu forward propogation to achieve low latency and high frequence results
+visualize_camera_size: 0.4      # size of camera marker in RVIZ

@@ -1,3 +1,0 @@
-      &      helical_eight_fY_2F_2ms &  helical_eight_fY_2F_2p5ms
-model_sim &     0.16 &  0.11 
-vins_sim &     0.16 &  0.12 

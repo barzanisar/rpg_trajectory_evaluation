@@ -1,0 +1,4 @@
+      &      helical_eight_fY_nF_1ms & helical_eight_fY_nF_2ms & helical_eight_fY_nF_2p5ms & helical_eight_fY_nF_4ms & helical_eight_fY_nF_5ms & helical_eight_fY_2F_1ms & helical_eight_fY_2F_2ms &  helical_eight_fY_2F_2p5ms
+extFNnBmodel_sim &     0.21 & 0.17 & 0.14 & 0.06 & 0.06 & 0.15 & 0.12 &  0.07 
+extFNnBcmodel_sim &     0.19 & 0.14 & 0.16 & 0.07 & 0.06 & 0.15 & 0.14 &  0.06 
+vins_sim &     0.23 & 0.15 & 0.20 & 0.09 & 0.07 & 0.16 & 0.16 &  0.09 

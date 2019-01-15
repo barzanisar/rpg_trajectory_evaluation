@@ -1,0 +1,4 @@
+      &      random_fY_nF_1ms & random_fY_nF_2ms & random_fY_nF_2p5ms & random_fY_nF_4ms & random_fY_nF_5ms & random_fY_2F_1ms & random_fY_2F_2ms &  random_fY_2F_2p5ms
+extFNnBmodel_sim &     0.04 & 0.08 & 0.07 & 0.03 & 0.07 & 0.08 & 0.04 &  0.05 
+extFNnBcmodel_sim &     0.04 & 0.07 & 0.08 & 0.03 & 0.06 & 0.09 & 0.05 &  0.07 
+vins_sim &     0.07 & 0.09 & 0.09 & 0.04 & 0.07 & 0.10 & 0.06 &  0.06 
