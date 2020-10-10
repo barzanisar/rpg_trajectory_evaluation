@@ -149,7 +149,7 @@ class Trajectory:
         if os.path.isfile(self.cached_rel_err_fn):
             print('Loading cached relative (odometry) errors from ' +
                   self.cached_rel_err_fn)
-            with open(self.cached_rel_err_fn) as f:
+            with open(self.cached_rel_err_fn, 'rb') as f:
                 self.rel_errors = pickle.load(f)
             print("Loaded odometry error calcualted at {0}".format(
                 self.rel_errors.keys()))
@@ -160,7 +160,7 @@ class Trajectory:
 
     def cache_current_error(self):
         if self.rel_errors:
-            with open(self.cached_rel_err_fn, 'w') as f:
+            with open(self.cached_rel_err_fn, 'wb') as f:
                 pickle.dump(self.rel_errors, f)
             print(Fore.YELLOW + "Saved relative error to {0}.".format(
                 self.cached_rel_err_fn))
